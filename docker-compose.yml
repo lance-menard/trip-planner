@@ -1,0 +1,73 @@
+version: '3.6'
+services:
+  # CORE INFRASTRUCTURE #
+  ## RabbitMQ ##
+  rabbitmq:
+    image: 'rabbitmq:3.8.2-management-alpine'
+    restart: always
+    networks:
+      - backend
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+    volumes:
+      - 'rabbitmq:/var/lib/rabbitmq:cached'
+  ## Redis ##
+  redis:
+    image: 'redis:4.0.14-alpine3.11'
+    restart: always
+    networks:
+      - backend
+    ports:
+      - '6379:6379'
+  ## PostgreSQL ##
+  postgres-primary:
+    hostname: postgres-primary
+    image: 'postgres:12-alpine'
+    restart: always
+    networks:
+      - backend
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password1234
+    volumes:
+      - 'postgres-primary:/var/lib/postgresql/data:cached'
+  # APPLICATION SERVICES #
+  ## GraphQL API ##
+  graphql-api:
+    image: hasura/graphql-engine:v1.3.3
+    ports:
+      - '8080:8080'
+    depends_on:
+      - 'postgres-primary'
+    restart: always
+    networks:
+      - backend
+    environment:
+      HASURA_GRAPHQL_DATABASE_URL: postgres://postgres:password1234@postgres-primary:5432/postgres
+      ## enable the console served by server
+      HASURA_GRAPHQL_ENABLE_CONSOLE: 'true' # set to "false" to disable console
+      ## enable debugging mode. It is recommended to disable this in production
+      HASURA_GRAPHQL_DEV_MODE: 'true'
+      HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup, http-log, webhook-log, websocket-log, query-log
+      MAPS_API_URL: http://maps-api/
+  maps-api:
+    hostname: maps-api
+    image: maps-api
+    restart: always
+    networks:
+      - backend
+    ports:
+      - '4001:80'
+    environment:
+      NODE_ENV: development
+      GOOGLE_API_KEY: ${GOOGLE_API_KEY}
+    command: npm run start
+volumes:
+  elasticsearch:
+  rabbitmq:
+  postgres-primary:
+networks:
+  backend:

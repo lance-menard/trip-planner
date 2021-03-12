@@ -1,0 +1,59 @@
+# import PlaceType from 'placeTypes.graphql'
+
+scalar ID
+scalar Int
+scalar Float
+scalar Boolean
+scalar String
+scalar DateTime
+scalar JSON
+scalar JSONObject
+
+enum PlaceRankBy {
+  PROMINENCE
+  DISTANCE
+}
+
+input LatLngInput {
+  lat: Float!
+  lng: Float!
+}
+
+type LatLng {
+  lat: Float!
+  lng: Float!
+}
+
+type PlacePhoto {
+  reference: String!
+  height: Int!
+  width: Int!
+  attributions: [String!]!
+}
+
+type Place {
+  id: String!
+  location: LatLng!
+  name: String!
+  rating: Float
+  types: [String!]!
+  url: String
+  photos: [PlacePhoto!]!
+  data: JSON!
+}
+
+type Query {
+  places(
+    location: LatLngInput!
+    radius: Int
+    keyword: String
+    rankBy: PlaceRankBy
+    type: PlaceType
+  ): [Place!]
+
+  place(id: String!): Place!
+}
+
+type Mutation {
+  _: Boolean
+}

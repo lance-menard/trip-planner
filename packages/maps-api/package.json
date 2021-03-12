@@ -1,0 +1,35 @@
+{
+  "name": "maps-api",
+  "version": "1.0.0",
+  "description": "A graphQL API adapting the Google Maps API to the trip planner infrastructure.",
+  "main": "dist/index.js",
+  "author": "Lance Menard",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "watch": "cross-env HTTP_LISTENING_PORT=4001 gulp watch",
+    "build": "gulp build",
+    "start": "node dist/index.js",
+    "image": "cross-var docker build --build-arg SERVICE_PACKAGE_NAME=$npm_package_name -t $npm_package_name ../../"
+  },
+  "dependencies": {
+    "apollo-server": "^2.21.1",
+    "cross-env": "^7.0.0",
+    "convict": "^5.2.0",
+    "graphql": "^14.6.0",
+    "graphql-import": "^1.0.2",
+    "graphql-iso-date": "^3.6.1",
+    "graphql-middleware": "^4.0.3",
+    "graphql-tools": "^4.0.8",
+    "graphql-type-json": "^0.3.1",
+    "ramda": "^0.26.1",
+    "ramda-adjunct": "^2.25.0",
+    "source-map-support": "^0.5.16",
+    "verror": "^1.10.0",
+    "@googlemaps/google-maps-services-js": "^3.1.16",
+    "cross-var": "^1.1.0"
+  },
+  "devDependencies": {
+    "gulp": "^4.0.2"
+  }
+}

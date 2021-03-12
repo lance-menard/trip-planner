@@ -1,0 +1,62 @@
+{
+  "name": "trip-planner",
+  "private": true,
+  "dependencies": {
+    "@babel/runtime": "^7.12.5"
+  },
+  "devDependencies": {
+    "lerna": "^3.13.1",
+    "babel-eslint": "10.1.0",
+    "@babel/core": "^7.12.3",
+    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.12.1",
+    "@babel/plugin-proposal-optional-chaining": "^7.12.1",
+    "@babel/plugin-proposal-private-methods": "^7.12.1",
+    "@babel/plugin-proposal-class-properties": "^7.12.1",
+    "@babel/plugin-proposal-numeric-separator": "^7.12.5",
+    "@babel/plugin-proposal-logical-assignment-operators": "^7.12.1",
+    "@babel/plugin-transform-runtime": "^7.12.1",
+    "@babel/plugin-syntax-import-meta": "^7.10.4",
+    "@babel/plugin-syntax-dynamic-import": "^7.8.3",
+    "@babel/plugin-proposal-json-strings": "^7.12.1",
+    "@babel/preset-env": "^7.12.1",
+    "@babel/preset-react": "^7.12.5",
+    "eslint": "6.8.0",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-config-prettier": "^6.10.0",
+    "eslint-import-resolver-webpack": "^0.12.1",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-prettier": "^3.1.2",
+    "eslint-plugin-react": "^7.18.3",
+    "gulp": "^4.0.2",
+    "gulp-babel": "^8.0.0",
+    "gulp-benchmark": "^1.1.1",
+    "gulp-debug": "^4.0.0",
+    "gulp-nodemon": "^2.5.0",
+    "gulp-sourcemaps": "^2.6.5",
+    "vinyl-paths": "^3.0.1",
+    "del": "^5.1.0",
+    "dotenv": "^8.2.0"
+  },
+  "version": "1.0.0",
+  "description": "Smart road trip recommendations and planner",
+  "main": "index.js",
+  "scripts": {
+    "go": "npm i && npm run bootstrap && npm run build && npm run image && docker-compose up -d && start localhost:8080",
+    "bootstrap": "lerna bootstrap --hoist",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "lerna run build --stream",
+    "image": "lerna run image --stream"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lance-menard/trip-planner.git"
+  },
+  "author": "Lance Menard",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lance-menard/trip-planner/issues"
+  },
+  "homepage": "https://github.com/lance-menard/trip-planner#readme"
+}
