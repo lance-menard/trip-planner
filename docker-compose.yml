@@ -37,6 +37,7 @@ services:
   # APPLICATION SERVICES #
   ## GraphQL API ##
   graphql-api:
+    hostname: graphql-api
     image: hasura/graphql-engine:v1.3.3
     ports:
       - '8088:8080'
@@ -53,6 +54,9 @@ services:
       HASURA_GRAPHQL_DEV_MODE: 'true'
       HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup, http-log, webhook-log, websocket-log, query-log
       MAPS_API_URL: http://maps-api/
+      RECOMMENDATIONS_API_URL: http://recommendations-api/
+      RECOMMENDATIONS_AGGREGATOR_URL: http://recommendations-aggregator/
+      GRAPHQL_API_URL: http://graphql-api:8080/v1/graphql
   maps-api:
     hostname: maps-api
     image: maps-api
@@ -64,6 +68,43 @@ services:
     environment:
       NODE_ENV: development
       GOOGLE_API_KEY: ${GOOGLE_API_KEY}
+      MAPS_API_URL: http://maps-api/
+      RECOMMENDATIONS_API_URL: http://recommendations-api/
+      GRAPHQL_API_URL: http://graphql-api:8080/v1/graphql
+    command: npm run start
+  recommendations-api:
+    hostname: recommendations-api
+    image: recommendations-api
+    restart: always
+    networks:
+      - backend
+    ports:
+      - '4002:80'
+    depends_on:
+      - 'maps-api'
+      - 'graphql-api'
+    environment:
+      NODE_ENV: development
+      MAPS_API_URL: http://maps-api/
+      RECOMMENDATIONS_API_URL: http://recommendations-api/
+      GRAPHQL_API_URL: http://graphql-api:8080/v1/graphql
+    command: npm run start
+  recommendations-aggregator:
+    hostname: recommendations-aggregator
+    image: recommendations-aggregator
+    restart: always
+    networks:
+      - backend
+    ports:
+      - '4003:80'
+    depends_on:
+      - 'maps-api'
+      - 'graphql-api'
+    environment:
+      NODE_ENV: development
+      MAPS_API_URL: http://maps-api/
+      RECOMMENDATIONS_API_URL: http://recommendations-api/
+      GRAPHQL_API_URL: http://graphql-api:8080/v1/graphql
     command: npm run start
 volumes:
   elasticsearch:

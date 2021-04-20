@@ -62,9 +62,9 @@ module.exports = {
     new FaviconsWebpackPlugin('./static/icon.png'),
   ],
   resolve: {
-    externals: {
-      google: 'google',
-    },
+    // externals: {
+    //   google: 'google',
+    // },
     extensions: ['.mjs', '.js'],
     alias: {
       '~': path.join(__dirname, '/src'),

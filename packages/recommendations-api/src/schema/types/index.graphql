@@ -43,17 +43,15 @@ type Place {
 }
 
 type Query {
-  places(
+  recommendations(
+    userId: Int!
     location: LatLngInput!
     radius: Int
-    keyword: String
-    rankBy: PlaceRankBy
-    type: PlaceType
+    locationTypes: Int
+    resultsPerType: Int
   ): [Place!]
-
-  place(id: String!): Place!
 }
 
 type Mutation {
-  _maps: Boolean
+  _recommendations: Boolean
 }
