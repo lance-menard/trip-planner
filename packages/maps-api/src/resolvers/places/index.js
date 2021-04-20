@@ -8,9 +8,7 @@ const client = new Client({});
 
 export const places = async (
   parent,
-  { location, radius = 50000, keyword, rankBy, type },
-  context,
-  info
+  { location, radius = 50000, keyword, type }
 ) => {
   try {
     const response = await client.placesNearby({
@@ -19,8 +17,7 @@ export const places = async (
         location,
         radius,
         keyword,
-        rankby: rankBy,
-        type: type.toLowerCase(),
+        type: type ? type.toLowerCase() : undefined,
       },
     });
 

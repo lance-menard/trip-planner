@@ -1,0 +1,33 @@
+{
+  "name": "recommendations-aggregator",
+  "version": "1.0.0",
+  "description": "A webhook API aggregating place type usages for a user.",
+  "main": "dist/index.js",
+  "author": "Lance Menard",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "watch": "cross-env HTTP_LISTENING_PORT=4003 gulp watch",
+    "build": "gulp build",
+    "start": "node dist/index.js",
+    "image": "cross-var docker build --build-arg SERVICE_PACKAGE_NAME=$npm_package_name -t $npm_package_name ../../"
+  },
+  "dependencies": {
+    "apollo-client": "^2.6.10",
+    "apollo-cache-inmemory": "^1.6.6",
+    "restify": "^8.5.1",
+    "cross-env": "^7.0.0",
+    "cross-fetch": "^3.1.4",
+    "convict": "^5.2.0",
+    "ramda": "^0.26.1",
+    "graphql": "^14.6.0",
+    "graphql-tag": "^2.11.0",
+    "ramda-adjunct": "^2.25.0",
+    "source-map-support": "^0.5.16",
+    "verror": "^1.10.0",
+    "cross-var": "^1.1.0"
+  },
+  "devDependencies": {
+    "gulp": "^4.0.2"
+  }
+}
