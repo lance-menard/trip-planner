@@ -1,0 +1,152 @@
+{
+  "version": 2,
+  "tables": [
+    {
+      "table": {
+        "schema": "public",
+        "name": "stop"
+      },
+      "object_relationships": [
+        {
+          "name": "trip",
+          "using": {
+            "foreign_key_constraint_on": "trip_id"
+          }
+        }
+      ],
+      "remote_relationships": [
+        {
+          "definition": {
+            "remote_field": {
+              "place": {
+                "arguments": {
+                  "id": "$place_id"
+                }
+              }
+            },
+            "hasura_fields": [
+              "place_id"
+            ],
+            "remote_schema": "MapsAPI"
+          },
+          "name": "place"
+        }
+      ],
+      "event_triggers": [
+        {
+          "name": "stop_changed",
+          "definition": {
+            "enable_manual": false,
+            "insert": {
+              "columns": "*"
+            },
+            "delete": {
+              "columns": "*"
+            },
+            "update": {
+              "columns": [
+                "place_id"
+              ]
+            }
+          },
+          "retry_conf": {
+            "num_retries": 0,
+            "interval_sec": 10,
+            "timeout_sec": 60
+          },
+          "webhook_from_env": "RECOMMENDATIONS_AGGREGATOR_URL"
+        }
+      ]
+    },
+    {
+      "table": {
+        "schema": "public",
+        "name": "trip"
+      },
+      "object_relationships": [
+        {
+          "name": "user",
+          "using": {
+            "foreign_key_constraint_on": "user_id"
+          }
+        }
+      ],
+      "array_relationships": [
+        {
+          "name": "stops",
+          "using": {
+            "foreign_key_constraint_on": {
+              "column": "trip_id",
+              "table": {
+                "schema": "public",
+                "name": "stop"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "table": {
+        "schema": "public",
+        "name": "user"
+      },
+      "array_relationships": [
+        {
+          "name": "trips",
+          "using": {
+            "foreign_key_constraint_on": {
+              "column": "user_id",
+              "table": {
+                "schema": "public",
+                "name": "trip"
+              }
+            }
+          }
+        },
+        {
+          "name": "user_place_types",
+          "using": {
+            "foreign_key_constraint_on": {
+              "column": "user_id",
+              "table": {
+                "schema": "public",
+                "name": "user_place_type"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "table": {
+        "schema": "public",
+        "name": "user_place_type"
+      },
+      "object_relationships": [
+        {
+          "name": "user",
+          "using": {
+            "foreign_key_constraint_on": "user_id"
+          }
+        }
+      ]
+    }
+  ],
+  "remote_schemas": [
+    {
+      "name": "MapsAPI",
+      "definition": {
+        "url_from_env": "MAPS_API_URL",
+        "timeout_seconds": 60
+      }
+    },
+    {
+      "name": "RecommendationsAPI",
+      "definition": {
+        "url_from_env": "RECOMMENDATIONS_API_URL",
+        "timeout_seconds": 60
+      }
+    }
+  ]
+}

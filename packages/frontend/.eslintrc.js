@@ -45,7 +45,7 @@ module.exports = {
     ],
     'import/no-cycle': 0,
     'react/jsx-props-no-spreading': 0,
-    'arrow-parens': [2, 'as-needed'],
+    'arrow-parens': [2],
     'ramda/no-redundant-not': 'off',
     'ramda/no-redundant-or': 'off',
     'ramda/no-redundant-and': 'off',

@@ -1,6 +1,6 @@
+import { ApolloServer } from 'apollo-server';
 import { config } from '../../config';
 import { loadSchema } from '../schema';
-import { ApolloServer } from 'apollo-server';
 
 export const main = async () => {
   console.log('Starting Recommendations API...');

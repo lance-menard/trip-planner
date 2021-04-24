@@ -46,6 +46,8 @@ services:
     restart: always
     networks:
       - backend
+    volumes:
+      - './hasura/metadata:/hasura-metadata'
     environment:
       HASURA_GRAPHQL_DATABASE_URL: postgres://postgres:password1234@postgres-primary:5432/postgres
       ## enable the console served by server
@@ -105,6 +107,16 @@ services:
       MAPS_API_URL: http://maps-api/
       RECOMMENDATIONS_API_URL: http://recommendations-api/
       GRAPHQL_API_URL: http://graphql-api:8080/v1/graphql
+    command: npm run start
+  frontend:
+    hostname: frontend
+    image: frontend
+    restart: always
+    ports:
+      - '8080:8080'
+    environment:
+      NODE_ENV: development
+      GOOGLE_API_KEY: ${GOOGLE_API_KEY}
     command: npm run start
 volumes:
   elasticsearch:
