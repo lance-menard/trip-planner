@@ -39,20 +39,16 @@ const theme = createMuiTheme({
 document.body.style.margin = '0px';
 document.body.style.backgroundColor = theme.palette.background.primary;
 
-class App extends Component {
-  render() {
-    return (
-      <Provider store={store}>
-        <MuiThemeProvider theme={theme}>
-          <ApolloProvider client={client}>
-            <BrowserRouter>
-              <Main />
-            </BrowserRouter>
-          </ApolloProvider>
-        </MuiThemeProvider>
-      </Provider>
-    );
-  }
-}
+const App = () => (
+  <Provider store={store}>
+    <MuiThemeProvider theme={theme}>
+      <ApolloProvider client={client}>
+        <BrowserRouter>
+          <Main />
+        </BrowserRouter>
+      </ApolloProvider>
+    </MuiThemeProvider>
+  </Provider>
+);
 
 ReactDOM.render(<App />, document.getElementById('root'));

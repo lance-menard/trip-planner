@@ -13,7 +13,6 @@ const TRACKED_PLACE_TYPES = [
   'park',
   'restaurant',
   'shopping_mall',
-  'tourist_attraction',
   'zoo',
 ];
 
@@ -57,7 +56,7 @@ const getUserPlaceTypes = async (userId, placeTypes) => {
   const result = await graphql.graphQL({
     query: /* GraphQL */ `
       query GetTrip($userId: Int!, $placeTypes: [String!]!) {
-        user_place_types(
+        user_place_type(
           where: { user_id: { _eq: $userId }, place_type: { _in: $placeTypes } }
         ) {
           id
@@ -72,22 +71,22 @@ const getUserPlaceTypes = async (userId, placeTypes) => {
     },
   });
 
-  return result.data.user_place_types;
+  return result.data.user_place_type;
 };
 
 const updateUserPlaceTypes = async ({ create, update, amount }) =>
   graphql.graphQL({
     query: /* GraphQL */ `
       mutation UpdateUserPlaces(
-        $create: [user_place_types_insert_input!]!
+        $create: [user_place_type_insert_input!]!
         $update: [Int!]!
         $amount: Int!
       ) {
-        insert_user_place_types(objects: $create) {
+        insert_user_place_type(objects: $create) {
           affected_rows
         }
 
-        update_user_place_types(
+        update_user_place_type(
           _inc: { occurrences: $amount }
           where: { id: { _in: $update } }
         ) {
@@ -134,7 +133,7 @@ const incrementUserPlaceTypes = async (
 };
 
 export default {
-  CREATE: async ({
+  INSERT: async ({
     event: {
       data: { new: newData },
     },

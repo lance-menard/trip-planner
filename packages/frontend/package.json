@@ -5,7 +5,8 @@
   "scripts": {
     "watch": "cross-env NODE_OPTIONS=--max-old-space-size=4098 webpack-dev-server --hot --inline --history-api-fallback --config webpack.dev.js --color",
     "build": "cross-env NODE_OPTIONS=--max-old-space-size=3072 webpack -p --config webpack.prod.js",
-    "start": "node index.js"
+    "start": "node index.js",
+    "image": "cross-var docker build --build-arg SERVICE_PACKAGE_NAME=$npm_package_name -t $npm_package_name ../../"
   },
   "eslintConfig": {
     "settings": {
@@ -19,11 +20,13 @@
   "author": "Lance Menard",
   "license": "MIT",
   "dependencies": {
+    "autosuggest-highlight": "^3.1.1",
     "@apollo/client": "^3.3.11",
     "@react-google-maps/api": "^2.1.1",
     "@material-ui/core": "^4.11.0",
     "@material-ui/lab": "^4.0.0-alpha.57",
-    "@material-ui/pickers": "^3.2.0",
+    "@material-ui/pickers": "^3.3.10",
+    "@material-ui/icons": "^4.11.2",
     "classnames": "^2.2.6",
     "core-js": "^3.3.6",
     "express": "^4.17.1",

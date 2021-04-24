@@ -1,8 +1,5 @@
-import { config } from '../../config';
-import VError from 'verror';
-import fetch from 'cross-fetch';
-
-const serviceUrls = config.get('services');
+const fetch = require('cross-fetch');
+const VError = require('verror');
 
 const createGraphQLService = (url) => ({
   graphQL: async ({ query, variables }) => {
@@ -40,5 +37,8 @@ const createGraphQLService = (url) => ({
   },
 });
 
-export const graphql = createGraphQLService(serviceUrls.graphql);
-export const maps = createGraphQLService(serviceUrls.maps);
+module.exports.graphql = createGraphQLService(
+  'http://localhost:8088/v1/graphql'
+);
+module.exports.maps = createGraphQLService('http://localhost:4001');
+module.exports.recommendations = createGraphQLService('http://localhost:4002');

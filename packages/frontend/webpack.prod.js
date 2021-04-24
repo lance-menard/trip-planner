@@ -1,6 +1,7 @@
-const TerserPlugin = require('terser-webpack-plugin');
-const merge = require('webpack-merge');
 const common = require('./webpack.common.js');
+const merge = require('webpack-merge');
+const TerserPlugin = require('terser-webpack-plugin');
+const webpack = require('webpack');
 
 module.exports = merge(common, {
   mode: 'production',
@@ -17,5 +18,9 @@ module.exports = merge(common, {
       }),
     ],
   },
-  plugins: [],
+  plugins: [
+    new webpack.DefinePlugin({
+      'window.env.GOOGLE_API_KEY': `"${process.env.GOOGLE_API_KEY}"`,
+    }),
+  ],
 });

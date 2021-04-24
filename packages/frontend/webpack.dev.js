@@ -1,8 +1,8 @@
 const common = require('./webpack.common.js');
+const dotenv = require('dotenv');
 const merge = require('webpack-merge');
 const path = require('path');
 const webpack = require('webpack');
-const dotenv = require('dotenv');
 
 dotenv.config({ path: '../../.env' });
 

@@ -45,7 +45,7 @@ export const recommendations = async (
   } = await graphql.graphQL({
     query: /* GraphQL */ `
       query UserPlaceTypes($userId: Int!, $limit: Int!) {
-        user_place_types(
+        user_place_types: user_place_type(
           limit: $limit
           where: { user_id: { _eq: $userId } }
           order_by: { occurrences: desc_nulls_last }
